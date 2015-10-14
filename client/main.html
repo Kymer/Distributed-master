@@ -1,5 +1,7 @@
 <body>
-	<div class="ui container">
+	<div class="ui hidden divider"></div><div class="ui container">
+		<h1 class="ui header">Distributed application</h1>
+		<p>Only 113 lines of code!</p>
 		<table class="ui celled table">
 			<thead>
 				<tr>
@@ -11,14 +13,18 @@
 			</thead>
 			<tbody>
 				{{#each slaves}}
-					<tr>
-						<td>{{os.hostname}}</td>
-						<td>{{address}}</td>
-						<td>{{os.arch}}</td>
-						<td><button class="ui button">show alert</button></td>
-					</tr>
+					{{> slave}}
 				{{/each}}
 			</tbody>
 		</table>
 	</div>
 </body>
+
+<template name="slave">
+	<tr>
+		<td>{{os.hostname}}</td>
+		<td>{{address}}</td>
+		<td>{{os.arch}}</td>
+		<td><button class="ui button">show alert</button><span class="alertResult"></span></td>
+	</tr>
+</template>

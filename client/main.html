@@ -1,0 +1,24 @@
+<body>
+	<div class="ui container">
+		<table class="ui celled table">
+			<thead>
+				<tr>
+					<th>Hostname</th>
+					<th>Address</th>
+					<th>Architecture</th>
+					<th>Alert</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each slaves}}
+					<tr>
+						<td>{{os.hostname}}</td>
+						<td>{{address}}</td>
+						<td>{{os.arch}}</td>
+						<td><button class="ui button">show alert</button></td>
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</body>

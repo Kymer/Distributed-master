@@ -1,17 +1,43 @@
 <template name="slaveInfo">
 	{{#with slave}}
 	<div class="ui hidden divider"></div>
+
 	<div class="ui container">
-		<div class="ui stackable middle aligned grid container">
-			<div class="three wide column">
-				<i class="ui massive {{platformIcon os.platform}} icon"></i>
-			</div>
-			<div class="thirteen wide column">
-				<h1 class="ui header">{{os.hostname}}</h1>
-			</div>
+
+		<h1 class="ui centered header">
+			<i class="ui {{platformIcon os.platform}} icon"></i>
+			{{os.hostname}}
+		</h1>
+
+		<h2 class="ui header">Disk usage</h2>
+		<div class="ui green progress" data-percent="19">
+		  <div class="bar" style="transition: 300ms; -webkit-transition: 300ms; width: 19%;">
+		    <div class="progress">19% used</div>
+		  </div>
 		</div>
+
+		<h2 class="ui header">System info</h2>
+		<table class="ui table">
+			<thead>
+				<tr>
+					<th>Architecture</th>
+					<th>Cores</th>
+					<th>Platform</th>
+				</tr>
+			</thead>
+			<tbody>
+				<td>{{os.arch}}</td>
+				<td>128</td>
+				<td>Darwin</td>
+			</tbody>
+		</table>
+
+		<h2 class="ui header">Tasks</h2>
+		<div class="ui button">List directory</div>
+		<div class="ui button">Show alert</div>
+		<div class="ui button">Do something</div>
 	</div>
 
-	
+
 	{{/with}}
 </template>

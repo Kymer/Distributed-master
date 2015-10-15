@@ -2,6 +2,7 @@ connections = new Map();
 
 function makeConnection(address){
 	const connection = DDP.connect(address)
+	
 	connection._stream.on('disconnect', Meteor.bindEnvironment(function() {
 		Slaves.update({address}, {$set: {connected: false}})
 	}))

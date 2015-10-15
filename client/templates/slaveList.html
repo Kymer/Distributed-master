@@ -1,14 +1,12 @@
-<body>
+<template name="slaveList">
 	<div class="ui hidden divider"></div><div class="ui container">
 		<h1 class="ui header">Distributed application</h1>
 		<p>Only 113 lines of code!</p>
 		<table class="ui celled table">
 			<thead>
 				<tr>
+					<th>Platform</th>
 					<th>Hostname</th>
-					<th>Address</th>
-					<th>Architecture</th>
-					<th>Alert</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -18,13 +16,11 @@
 			</tbody>
 		</table>
 	</div>
-</body>
+</template>
 
 <template name="slave">
 	<tr>
+		<td><i class="ui {{platformIcon}} icon"></i></td>
 		<td>{{os.hostname}}</td>
-		<td>{{address}}</td>
-		<td>{{os.arch}}</td>
-		<td><button class="ui button">show alert</button><span class="alertResult"></span></td>
 	</tr>
 </template>

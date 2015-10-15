@@ -2,11 +2,11 @@
 	<div class="ui hidden divider"></div><div class="ui container">
 		<h1 class="ui header">Distributed application</h1>
 		<p>Only 113 lines of code!</p>
-		<table class="ui celled table">
+		<table class="ui single line table">
 			<thead>
 				<tr>
 					<th>Platform</th>
-					<th>Hostname</th>
+					<th colspan="2">Hostname</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -22,5 +22,6 @@
 	<tr>
 		<td><i class="ui {{platformIcon}} icon"></i></td>
 		<td>{{os.hostname}}</td>
+		<td class="right aligned"><i class="ui right angle icon"></i></td>
 	</tr>
 </template>

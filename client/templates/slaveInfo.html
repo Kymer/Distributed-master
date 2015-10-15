@@ -1,0 +1,17 @@
+<template name="slaveInfo">
+	{{#with slave}}
+	<div class="ui hidden divider"></div>
+	<div class="ui container">
+		<div class="ui stackable middle aligned grid container">
+			<div class="three wide column">
+				<i class="ui massive {{platformIcon os.platform}} icon"></i>
+			</div>
+			<div class="thirteen wide column">
+				<h1 class="ui header">{{os.hostname}}</h1>
+			</div>
+		</div>
+	</div>
+
+	
+	{{/with}}
+</template>

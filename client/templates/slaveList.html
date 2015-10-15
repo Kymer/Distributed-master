@@ -20,8 +20,8 @@
 
 <template name="slave">
 	<tr>
-		<td><i class="ui {{platformIcon}} icon"></i></td>
-		<td>{{os.hostname}}</td>
+		<td><i class="ui {{platformIcon os.platform}} icon"></i></td>
+		<td><a href="slaveInfo/{{_id}}">{{os.hostname}}</a></td>
 		<td class="right aligned"><i class="ui right angle icon"></i></td>
 	</tr>
 </template>

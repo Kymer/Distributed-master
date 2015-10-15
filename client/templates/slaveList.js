@@ -7,6 +7,4 @@ Template.slaveList.helpers({
 	slaves() {return Slaves.find({connected: true})}
 })
 
-Template.slave.helpers({
-	platformIcon() {return platformIcons.get(this.os.platform)}
-})
+Template.registerHelper('platformIcon', platform => {return platformIcons.get(platform)})

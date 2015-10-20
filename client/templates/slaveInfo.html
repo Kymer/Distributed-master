@@ -10,9 +10,9 @@
 		</h1>
 
 		<h2 class="ui header">Disk usage</h2>
-		<div class="ui green progress" data-percent="19">
-		  <div class="bar" style="transition: 300ms; -webkit-transition: 300ms; width: 19%;">
-		    <div class="progress">19% used</div>
+		<div class="ui green progress">
+		  <div class="bar" style="transition: 300ms; -webkit-transition: 300ms; width: {{usedPercentage os.drives.[0]}}%;">
+		    <div class="progress">{{usedPercentage os.drives.[0]}}% used</div>
 		  </div>
 		</div>
 
@@ -27,15 +27,15 @@
 			</thead>
 			<tbody>
 				<td>{{os.arch}}</td>
-				<td>128</td>
+				<td>{{os.cpuCount}}</td>
 				<td>Darwin</td>
 			</tbody>
 		</table>
 
 		<h2 class="ui header">Tasks</h2>
-		<div class="ui labeled icon button"><i class="ui folder icon"></i>List directory</div>
-		<div class="ui labeled icon button"><i class="ui announcement icon"></i>Show alert</div>
-		<div class="ui labeled icon button"><i class="ui list layout icon"></i>Show active processes</div>
+		<div class="ui labeled icon ls button"><i class="ui folder icon"></i>List directory</div>
+		<div class="ui labeled icon showAlert button"><i class="ui announcement icon"></i>Show alert</div>
+		<div class="ui labeled icon ps button"><i class="ui list layout icon"></i>Show active processes</div>
 	</div>
 
 

@@ -2,6 +2,7 @@ connections = new Map();
 
 function makeConnection(address){
 	const connection = DDP.connect(address)
+	connections.set(address, connection)
 	
 	connection._stream.on('disconnect', Meteor.bindEnvironment(function() {
 		Slaves.update({address}, {$set: {connected: false}})
@@ -10,7 +11,6 @@ function makeConnection(address){
 	connection.call('getOSInfo', (err, result) => {
 		Slaves.upsert({address}, {$set: {os: result}})
 	})
-	connections.set(address, connection)
 
 	Slaves.upsert({address}, {$set: {connected: true}})
 	return connection

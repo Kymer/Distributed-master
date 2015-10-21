@@ -2,7 +2,7 @@ DiskUsageGraph = class DiskUsageGraph extends React.Component {
 	barStyle() {
 		return {
 			transition: '300ms',
-			webkitTransition: '300ms',
+			WebkitTransition: '300ms',
 			width: `${this.props.percentage}%`
 		}
 	}

@@ -8,7 +8,6 @@ DiskUsageGraph = class DiskUsageGraph extends React.Component {
 	}
 
 	render() {
-
 		return (
 			<div>
 				<h2 className="ui header">Disk usage</h2>
@@ -19,6 +18,5 @@ DiskUsageGraph = class DiskUsageGraph extends React.Component {
 				</div>
 			</div>
 		)
-
 	} 
 }

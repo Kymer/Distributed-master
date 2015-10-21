@@ -1,8 +1,6 @@
-platformIcons = new Map();
-platformIcons.set('darwin', 'apple');
-platformIcons.set('linux', 'linux');
-platformIcons.set('win32', 'windows');
+platformIcons = new Map([
+	['darwin', 'apple'],
+	['linux', 'linux'],
+	['win32', 'windows']
+]);
 
-platformIcon = function(platformName) {
-	return platformIcons.get(platformName)
-}

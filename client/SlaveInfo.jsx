@@ -27,7 +27,7 @@ SlaveInfo = React.createClass({
 			<div className="ui container">
 				<div className="ui hidden divider"></div>
 				<h1 className="ui centered header">
-					<i className={"ui " + platformIcon(this.data.platform) + " icon"}></i>
+					<i className={"ui " + platformIcons.get(this.data.platform) + " icon"}></i>
 					{this.data.hostname}
 				</h1>
 

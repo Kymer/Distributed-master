@@ -13,13 +13,47 @@ SlaveInfo = React.createClass({
 		} : {}
 	},
 
+	getInitialState() {return {message: false}},
+
 	usedPercentage(disk) {
 		var {total, available, used} = disk
 		return parseFloat(total) == 0 ? 0 : Math.round(parseFloat(used) / parseFloat(total) * 10000)/100
 	},
 
 	showAlert() {
-		Meteor.call('showDialog', this.data.address)
+		Meteor.call('showDialog', this.data.address, (error, result) => {
+			if (error) {
+				this.setState({
+					message: {
+						title: 'Client rejected the dialog',
+						content: 'The client has canceled the operation',
+						icon: 'call'
+					}
+				})
+			} else {
+				this.setState({
+					message: {
+						title: 'Client answered',
+						content: `The client answered "${result['text returned']}" and pushed the button: ${result['button returned']}`,
+						icon: 'call'
+					}
+				})				
+			}
+		})
+	},
+
+	message() {
+		if (this.state.message) {
+			return (
+				<div className="ui icon message">
+					<i className={semanticIcon(this.state.message.icon)} />
+					<div className="content">
+						<div className="header">{this.state.message.title}</div>
+						<p>{this.state.message.content}</p>
+					</div>
+				</div>
+			)
+		}
 	},
 
 	render() {
@@ -53,8 +87,10 @@ SlaveInfo = React.createClass({
 
 				<h2 className="ui header">Tasks</h2>
 				<LabeledIconButton icon="folder">List directory</LabeledIconButton>
-				<LabeledIconButton icon="announcement" action={this.showAlert}>Show alert</LabeledIconButton>
+				<LabeledIconButton icon="call" action={this.showAlert}>Display dialog</LabeledIconButton>
 				<LabeledIconButton icon="list layout">Show active processes</LabeledIconButton>
+
+				{this.message()}
 			</div>
 		)
 	}

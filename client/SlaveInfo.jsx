@@ -27,7 +27,7 @@ SlaveInfo = React.createClass({
 			<div className="ui container">
 				<div className="ui hidden divider"></div>
 				<h1 className="ui centered header">
-					<i className={"ui " + platformIcons.get(this.data.platform) + " icon"}></i>
+					<i className={semanticIcon(platformIcons.get(this.data.platform))}></i>
 					{this.data.hostname}
 				</h1>
 
@@ -50,9 +50,9 @@ SlaveInfo = React.createClass({
 				</table>
 
 				<h2 className="ui header">Tasks</h2>
-				<div className="ui labeled icon button"><i className="ui folder icon"></i>List directory</div>
-				<div className="ui labeled icon button" onClick={this.showAlert}><i className="ui announcement icon"></i>Show alert</div>
-				<div className="ui labeled icon button"><i className="ui list layout icon"></i>Show active processes</div>
+				<LabeledIconButton icon="folder">List directory</LabeledIconButton>
+				<LabeledIconButton icon="announcement" action={this.showAlert}>Show alert</LabeledIconButton>
+				<LabeledIconButton icon="list layout">Show active processes</LabeledIconButton>
 			</div>
 		)
 	}

@@ -4,3 +4,4 @@ platformIcons = new Map([
 	['win32', 'windows']
 ]);
 
+semanticIcon = (name => `ui ${name} icon`)

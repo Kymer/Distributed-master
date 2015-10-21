@@ -34,15 +34,10 @@ SlaveList = React.createClass({
 })
 
 class Row extends React.Component {
-	platformIcon(platformName) {
-		console.log(platformName)
-		return platformIcons.get(platformName)
-	}
-
 	render() {
 		return (
 			<tr>
-				<td><i className={"ui " + this.platformIcon(this.props.slave.os.platform) + " icon"}></i></td>
+				<td><i className={"ui " + platformIcon(this.props.slave.os.platform) + " icon"}></i></td>
 				<td><a href={"slaveInfo/" + this.props.slave._id}>{this.props.slave.os.hostname}</a></td>
 				<td className="right aligned"><i className="ui right angle icon"></i></td>
 			</tr>

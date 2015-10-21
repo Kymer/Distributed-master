@@ -20,42 +20,6 @@ SlaveInfo = React.createClass({
 		return parseFloat(total) == 0 ? 0 : Math.round(parseFloat(used) / parseFloat(total) * 10000)/100
 	},
 
-	showAlert() {
-		Meteor.call('showDialog', this.data.address, (error, result) => {
-			if (error) {
-				this.setState({
-					message: {
-						title: 'Client rejected the dialog',
-						content: 'The client has canceled the operation',
-						icon: 'call'
-					}
-				})
-			} else {
-				this.setState({
-					message: {
-						title: 'Client answered',
-						content: `The client answered "${result['text returned']}" and pushed the button: ${result['button returned']}`,
-						icon: 'call'
-					}
-				})				
-			}
-		})
-	},
-
-	message() {
-		if (this.state.message) {
-			return (
-				<div className="ui icon message">
-					<i className={semanticIcon(this.state.message.icon)} />
-					<div className="content">
-						<div className="header">{this.state.message.title}</div>
-						<p>{this.state.message.content}</p>
-					</div>
-				</div>
-			)
-		}
-	},
-
 	render() {
 		return (
 			<div className="ui container">
@@ -93,5 +57,41 @@ SlaveInfo = React.createClass({
 				{this.message()}
 			</div>
 		)
+	},
+
+	showAlert() {
+		Meteor.call('showDialog', this.data.address, (error, result) => {
+			if (error) {
+				this.setState({
+					message: {
+						title: 'Client rejected the dialog',
+						content: 'The client has canceled the operation',
+						icon: 'call'
+					}
+				})
+			} else {
+				this.setState({
+					message: {
+						title: 'Client answered',
+						content: `The client answered "${result['text returned']}" and pushed the button: ${result['button returned']}`,
+						icon: 'call'
+					}
+				})				
+			}
+		})
+	},
+
+	message() {
+		if (this.state.message) {
+			return (
+				<div className="ui icon message">
+					<i className={semanticIcon(this.state.message.icon)} />
+					<div className="content">
+						<div className="header">{this.state.message.title}</div>
+						<p>{this.state.message.content}</p>
+					</div>
+				</div>
+			)
+		}
 	}
 })

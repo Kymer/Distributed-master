@@ -6,7 +6,9 @@ SlaveInfo = React.createClass({
 		return slave ? {
 			percentageFree: this.usedPercentage(slave.os.drives[0]),
 			hostname: slave.os.hostname,
-			platform: slave.os.platform
+			platform: slave.os.platform,
+			cores: slave.os.cpuCount,
+			architecture: slave.os.arch
 		} : {}
 	},
 
@@ -17,7 +19,6 @@ SlaveInfo = React.createClass({
 
 	render() {
 		return (
-
 			<div className="ui container">
 				<div className="ui hidden divider"></div>
 				<h1 className="ui centered header">
@@ -37,8 +38,8 @@ SlaveInfo = React.createClass({
 						</tr>
 					</thead>
 					<tbody>
-						<td>{os.arch}</td>
-						<td>{os.cpuCount}</td>
+						<td>{this.data.architecture}</td>
+						<td>{this.data.cores}</td>
 						<td>Darwin</td>
 					</tbody>
 				</table>
@@ -48,12 +49,6 @@ SlaveInfo = React.createClass({
 				<div className="ui labeled icon showAlert button"><i className="ui announcement icon"></i>Show alert</div>
 				<div className="ui labeled icon ps button"><i className="ui list layout icon"></i>Show active processes</div>
 			</div>
-
-
-			)
+		)
 	}
 })
-
-
-
-

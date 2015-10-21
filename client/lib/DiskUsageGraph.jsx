@@ -18,7 +18,7 @@ DiskUsageGraph = class DiskUsageGraph extends React.Component {
 					</div>
 				</div>
 			</div>
-			)
+		)
 
 	} 
 }

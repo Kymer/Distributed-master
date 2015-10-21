@@ -4,6 +4,7 @@ SlaveInfo = React.createClass({
 	getMeteorData() {
 		var slave = Slaves.findOne(FlowRouter.getParam('id'))
 		return slave ? {
+			address: slave.address,
 			percentageFree: this.usedPercentage(slave.os.drives[0]),
 			hostname: slave.os.hostname,
 			platform: slave.os.platform,
@@ -13,8 +14,12 @@ SlaveInfo = React.createClass({
 	},
 
 	usedPercentage(disk) {
-			var {total, available, used} = disk
-			return parseFloat(total) == 0 ? 0 : Math.round(parseFloat(used) / parseFloat(total) * 10000)/100
+		var {total, available, used} = disk
+		return parseFloat(total) == 0 ? 0 : Math.round(parseFloat(used) / parseFloat(total) * 10000)/100
+	},
+
+	showAlert() {
+		Meteor.call('showDialog', this.data.address)
 	},
 
 	render() {
@@ -45,9 +50,9 @@ SlaveInfo = React.createClass({
 				</table>
 
 				<h2 className="ui header">Tasks</h2>
-				<div className="ui labeled icon ls button"><i className="ui folder icon"></i>List directory</div>
-				<div className="ui labeled icon showAlert button"><i className="ui announcement icon"></i>Show alert</div>
-				<div className="ui labeled icon ps button"><i className="ui list layout icon"></i>Show active processes</div>
+				<div className="ui labeled icon button"><i className="ui folder icon"></i>List directory</div>
+				<div className="ui labeled icon button" onClick={this.showAlert}><i className="ui announcement icon"></i>Show alert</div>
+				<div className="ui labeled icon button"><i className="ui list layout icon"></i>Show active processes</div>
 			</div>
 		)
 	}

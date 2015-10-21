@@ -43,9 +43,11 @@ SlaveInfo = React.createClass({
 						</tr>
 					</thead>
 					<tbody>
-						<td>{this.data.architecture}</td>
-						<td>{this.data.cores}</td>
-						<td>Darwin</td>
+						<tr>
+							<td>{this.data.architecture}</td>
+							<td>{this.data.cores}</td>
+							<td>Darwin</td>
+						</tr>
 					</tbody>
 				</table>
 

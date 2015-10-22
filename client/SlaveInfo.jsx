@@ -61,23 +61,20 @@ SlaveInfo = React.createClass({
 
 	showAlert() {
 		Meteor.call('showDialog', this.data.address, (error, result) => {
-			if (error) {
-				this.setState({
-					message: {
-						title: 'Client rejected the dialog',
-						content: 'The client has canceled the operation',
-						icon: 'call'
-					}
-				})
-			} else {
-				this.setState({
-					message: {
-						title: 'Client answered',
-						content: `The client answered "${result['text returned']}" and pushed the button: ${result['button returned']}`,
-						icon: 'call'
-					}
-				})				
-			}
+			const message = error ?
+				{
+					title: 'Client rejected the dialog',
+					content: 'The client has canceled the operation',
+					icon: 'call'
+				}
+			:
+				{
+					title: 'Client answered',
+					content: `The client answered "${result['text returned']}" and pushed the button: ${result['button returned']}`,
+					icon: 'call'
+				};
+
+			this.setState({message})
 		})
 	},
 

@@ -83,6 +83,7 @@ SlaveInfo = React.createClass({
 			return (
 				<div className="ui icon message">
 					<i className={semanticIcon(this.state.message.icon)} />
+					<i className="close icon" onClick={() => this.setState({message: false})}></i>
 					<div className="content">
 						<div className="header">{this.state.message.title}</div>
 						<p>{this.state.message.content}</p>

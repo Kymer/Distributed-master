@@ -36,6 +36,17 @@
 		<div class="ui labeled icon ls button"><i class="ui folder icon"></i>List directory</div>
 		<div class="ui labeled icon showAlert button"><i class="ui announcement icon"></i>Show alert</div>
 		<div class="ui labeled icon ps button"><i class="ui list layout icon"></i>Show active processes</div>
+
+		{{#if alertButtonWasPushed}}
+			<div class="ui icon message">
+			<i class="{{messageIcon}}"></i>
+			<div class="content">
+				<div class="header">{{messageTitle}}</div>
+				<p>{{messageContent}}</p>
+			</div>
+			</div>
+		{{/if}}
+
 	</div>
 
 

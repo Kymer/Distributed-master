@@ -21,3 +21,5 @@ insecure                # Allow all DB writes from clients (for prototyping)
 semantic:ui-css
 kadira:flow-router
 kadira:blaze-layout
+reactive-var
+reactive-dict

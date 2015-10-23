@@ -42,5 +42,8 @@ Template.slaveInfo.events({
 				t.messageInfo.set('icon', 'ui big frown icon')
 			}	
 		})
+	},
+	'click .close'(e, t) {
+		t.messageInfo.set('showMessage', false)
 	}
 })

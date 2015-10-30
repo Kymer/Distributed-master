@@ -1,0 +1,55 @@
+<template name="slaveInfo">
+	{{#with slave}}
+	<div class="ui hidden divider"></div>
+
+	<div class="ui container">
+
+		<h1 class="ui centered header">
+			<i class="ui {{platformIcon os.platform}} icon"></i>
+			{{os.hostname}}
+		</h1>
+
+		<h2 class="ui header">Disk usage</h2>
+		<div class="ui green progress">
+		  <div class="bar" style="transition: 300ms; -webkit-transition: 300ms; width: {{usedPercentage os.drives.[0]}}%;">
+		    <div class="progress">{{usedPercentage os.drives.[0]}}% used</div>
+		  </div>
+		</div>
+
+		<h2 class="ui header">System info</h2>
+		<table class="ui table">
+			<thead>
+				<tr>
+					<th>Architecture</th>
+					<th>Cores</th>
+					<th>Platform</th>
+				</tr>
+			</thead>
+			<tbody>
+				<td>{{os.arch}}</td>
+				<td>{{os.cpuCount}}</td>
+				<td>Darwin</td>
+			</tbody>
+		</table>
+
+		<h2 class="ui header">Tasks</h2>
+		<div class="ui labeled icon ls button"><i class="ui folder icon"></i>List directory</div>
+		<div class="ui labeled icon showAlert button"><i class="ui announcement icon"></i>Show alert</div>
+		<div class="ui labeled icon ps button"><i class="ui list layout icon"></i>Show active processes</div>
+
+		{{#if alertButtonWasPushed}}
+			<div class="ui icon message">
+			<i class="{{messageIcon}}"></i>
+			<i class="close icon"></i>
+			<div class="content">
+				<div class="header">{{messageTitle}}</div>
+				<p>{{messageContent}}</p>
+			</div>
+			</div>
+		{{/if}}
+
+	</div>
+
+
+	{{/with}}
+</template>

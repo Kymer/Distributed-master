@@ -1,0 +1,27 @@
+<template name="slaveList">
+	<div class="ui hidden divider"></div><div class="ui container">
+		<h1 class="ui header">Distributed application</h1>
+		<p>Only 113 lines of code!</p>
+		<table class="ui single line table">
+			<thead>
+				<tr>
+					<th>Platform</th>
+					<th colspan="2">Hostname</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each slaves}}
+					{{> slave}}
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</template>
+
+<template name="slave">
+	<tr>
+		<td><i class="ui {{platformIcon os.platform}} icon"></i></td>
+		<td><a href="slaveInfo/{{_id}}">{{os.hostname}}</a></td>
+		<td class="right aligned"><i class="ui right angle icon"></i></td>
+	</tr>
+</template>

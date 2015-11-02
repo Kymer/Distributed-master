@@ -32,20 +32,17 @@
 		</table>
 
 		<h2 class="ui header">Tasks</h2>
-		<div class="ui labeled icon ls button"><i class="ui folder icon"></i>List directory</div>
-		<div class="ui labeled icon showAlert button"><i class="ui announcement icon"></i>Show alert</div>
-		<div class="ui labeled icon ps button"><i class="ui list layout icon"></i>Show active processes</div>
+		<div class="ui labeled icon button"><i class="ui folder icon"></i>List directory</div>
+		<div class="ui labeled icon button" v-on="click:showAlert"><i class="ui announcement icon"></i>Show alert</div>
+		<div class="ui labeled icon button"><i class="ui list layout icon"></i>Show active processes</div>
 
-		{{#if alertButtonWasPushed}}
-			<div class="ui icon message">
-			<i class="{{messageIcon}}"></i>
-			<i class="close icon"></i>
+		<div v-if="message" class="ui icon message">
+			<i class="ui [[message.icon]] icon"></i>
+			<i class="close icon" v-on="click:dismissAlert"></i>
 			<div class="content">
-				<div class="header">{{messageTitle}}</div>
-				<p>{{messageContent}}</p>
+				<div class="header">[[message.title]]</div>
+				<p>[[message.content]]</p>
 			</div>
-			</div>
-		{{/if}}
-
+		</div>
 	</div>
 </template>

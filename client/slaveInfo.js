@@ -1,75 +1,45 @@
-Template.slaveInfo.onCreated(function() {
-	this.messageInfo = new ReactiveDict('showMessage', false)
-})
+const emptySlave = { os: {
+	platform: '',
+	drives: [{total: 0, used: 0}],
+	hostname: ''
+}}
 
 Template.slaveInfo.onRendered(function() {
-	Vue.config.debug = true
-	new Vue({
+	slaveInfoVM = new Vue({
 		el: this.find('div.ui.container'),
-		data: {
-			slave: { os: {
-				platform: '',
-				drives: [{total: 0, used: 0}]
-			}}
-		},
+		data: {slave: emptySlave, message: false},
 		sync: {
-			slave() { 
-				return Slaves.findOne(FlowRouter.getParam('id')) 
+			slave() {
+				const cursor = Slaves.find(FlowRouter.getParam('id'))
+				return cursor.count()>0 ? cursor.fetch()[0] : emptySlave
 			},
 		},
 		filters: {
-			platformIcon(platform) {return platformIcons.get(platform)},
+			platformIcon(platform) {console.log(platform); return platformIcons.get(platform)},
 			usedPercentage(disk) {
 				var {total, available, used} = disk
 				return parseFloat(total) == 0 ? 0 : Math.round(parseFloat(used) / parseFloat(total) * 10000)/100
 			}
+		},
+		methods: {
+			showAlert(event) {
+				Meteor.call('showDialog', this.slave.address, (error, result) => {
+					this.message = error ? {
+						title: 'Client rejected the dialog',
+						content: 'The client has canceled the operation',
+						icon: 'big frown'
+					} : {
+						title: 'Client answered',
+						content: `The client answered "${result['text returned']}" and pushed the button: ${result['button returned']}`,
+						icon: 'big call'
+					}
+				})
+			},
+			dismissAlert() {this.message = false}
 		}
 	})
 })
 
-Template.slaveInfo.helpers({
-	slave() {
-		return Slaves.findOne(FlowRouter.getParam('id'))
-	},
-	usedPercentage(disk) {
-		console.log(disk)
-		var {total, available, used} = disk
-		return parseFloat(total) == 0 ? 0 : Math.round(parseFloat(used) / parseFloat(total) * 10000)/100
-	},
-	alertButtonWasPushed() {
-		return Template.instance().messageInfo.get('showMessage')
-	},
-	messageTitle() {
-		return Template.instance().messageInfo.get('title')
-	},
-	messageContent() {
-		return Template.instance().messageInfo.get('content')
-	},
-	messageIcon() {
-		return Template.instance().messageInfo.get('icon')
-	}
-})
-
-Template.slaveInfo.events({
-	'click .showAlert'(e, t) {
-		t.messageInfo.set('title', 'Hold tight!')
-		t.messageInfo.set('content', "We're awaiting client response...")
-		t.messageInfo.set('icon', 'big smile loading icon')
-		t.messageInfo.set('showMessage', true)
-
-		Meteor.call('showDialog', this.address, function(error, result) {
-			if(result) {
-				t.messageInfo.set('title', 'Client answered')
-				t.messageInfo.set('content', `The client answered "${result['text returned']}" and pushed the button: ${result['button returned']}`)
-				t.messageInfo.set('icon', 'ui big call icon')
-			} else {
-				t.messageInfo.set('title', 'Client rejected the dialog')
-				t.messageInfo.set('content', 'The client has canceled the operation')
-				t.messageInfo.set('icon', 'ui big frown icon')
-			}	
-		})
-	},
-	'click .close'(e, t) {
-		t.messageInfo.set('showMessage', false)
-	}
-})
+// t.messageInfo.set('title', 'Hold tight!')
+// t.messageInfo.set('content', "We're awaiting client response...")
+// t.messageInfo.set('icon', 'big smile loading icon')

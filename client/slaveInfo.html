@@ -1,18 +1,17 @@
 <template name="slaveInfo">
-	{{#with slave}}
 	<div class="ui hidden divider"></div>
 
 	<div class="ui container">
 
 		<h1 class="ui centered header">
-			<i class="ui {{platformIcon os.platform}} icon"></i>
-			{{os.hostname}}
+			<i class="ui [[slave.os.platform | platformIcon]] icon"></i>
+			[[slave.os.hostname]]
 		</h1>
 
 		<h2 class="ui header">Disk usage</h2>
 		<div class="ui green progress">
-		  <div class="bar" style="transition: 300ms; -webkit-transition: 300ms; width: {{usedPercentage os.drives.[0]}}%;">
-		    <div class="progress">{{usedPercentage os.drives.[0]}}% used</div>
+		  <div class="bar" style="transition: 300ms; -webkit-transition: 300ms; width: [[ slave.os.drives[0] | usedPercentage ]]%;">
+		    <div class="progress">[[ slave.os.drives[0] | usedPercentage ]]% used</div>
 		  </div>
 		</div>
 
@@ -26,8 +25,8 @@
 				</tr>
 			</thead>
 			<tbody>
-				<td>{{os.arch}}</td>
-				<td>{{os.cpuCount}}</td>
+				<td>[[slave.os.arch]]</td>
+				<td>[[slave.os.cpuCount]]</td>
 				<td>Darwin</td>
 			</tbody>
 		</table>
@@ -49,7 +48,4 @@
 		{{/if}}
 
 	</div>
-
-
-	{{/with}}
 </template>

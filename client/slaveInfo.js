@@ -2,11 +2,37 @@ Template.slaveInfo.onCreated(function() {
 	this.messageInfo = new ReactiveDict('showMessage', false)
 })
 
+Template.slaveInfo.onRendered(function() {
+	Vue.config.debug = true
+	new Vue({
+		el: this.find('div.ui.container'),
+		data: {
+			slave: { os: {
+				platform: '',
+				drives: [{total: 0, used: 0}]
+			}}
+		},
+		sync: {
+			slave() { 
+				return Slaves.findOne(FlowRouter.getParam('id')) 
+			},
+		},
+		filters: {
+			platformIcon(platform) {return platformIcons.get(platform)},
+			usedPercentage(disk) {
+				var {total, available, used} = disk
+				return parseFloat(total) == 0 ? 0 : Math.round(parseFloat(used) / parseFloat(total) * 10000)/100
+			}
+		}
+	})
+})
+
 Template.slaveInfo.helpers({
 	slave() {
 		return Slaves.findOne(FlowRouter.getParam('id'))
 	},
 	usedPercentage(disk) {
+		console.log(disk)
 		var {total, available, used} = disk
 		return parseFloat(total) == 0 ? 0 : Math.round(parseFloat(used) / parseFloat(total) * 10000)/100
 	},

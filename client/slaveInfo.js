@@ -5,7 +5,7 @@ const emptySlave = { os: {
 }}
 
 Template.slaveInfo.onRendered(function() {
-	slaveInfoVM = new Vue({
+	new Vue({
 		el: this.find('div.ui.container'),
 		data: {slave: emptySlave, message: false},
 		sync: {

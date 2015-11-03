@@ -1,9 +1,55 @@
 <dom-module id="slave-list">
 	<template>
-		<h1>list</h1>
+		<div class="ui hidden divider"></div><div class="ui container">
+			<h1 class="ui header">Distributed application</h1>
+			<p>Only 113 lines of code!</p>
+			<table class="ui single line table">
+				<thead>
+					<tr>
+						<th>Platform</th>
+						<th colspan="2">Hostname</th>
+					</tr>
+				</thead>
+				<tbody>
+					<template is="dom-repeat" items="{{slaves}}">
+						<tr is="slave-row" slave="{{item}}"></slave-row>
+					</template>
+				</tbody>
+			</table>
+		</div>
 	</template>
 
 	<script>
-		Polymer({is: 'slave-list'})
+		Polymer({
+			is: 'slave-list',
+			properties: {
+				slaves: {
+					type: Array,
+					value: [{os: {hostname: '1'}}, {os: {hostname: '2'}}]
+				}
+			},
+			attached() {
+				var self = this
+				self._slavesTracker = Tracker.autorun(function() {
+					self.slaves = Slaves.find({connected: true}).fetch()
+				})
+			},
+			detached() { self._slavesTracker.stop() }
+		})
+	</script>
+</dom-module>
+
+<dom-module is="slave-row">
+	<template>
+		<td><platform-icon platform="{{slave.os.platform}}" /></td>
+		<td><a href="slaveInfo/{{_id}}">{{slave.os.hostname}}</a></td>
+		<td class="right aligned"><semantic-icon name="right angle" /></td>
+	</template>
+
+	<script>
+		Polymer({
+			is: 'slave-row',
+			extends: 'tr'
+		})
 	</script>
 </dom-module>

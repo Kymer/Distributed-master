@@ -1,0 +1,39 @@
+<dom-module is="semantic-icon">
+	<template> <i class$="{{iconClass}}"/> </template>
+
+	<script>
+		Polymer({
+			is: 'semantic-icon',
+			properties: {
+				name: String,
+				iconClass: {
+					type: String,
+					computed: 'computeIconClass(name)'
+				}
+			},
+			computeIconClass(platform) {
+				return `ui ${platform} icon`
+			}
+		})
+	</script>	
+</dom-module>
+
+<dom-module is="platform-icon">
+	<template> <i class$="{{iconClass}}"/> </template>
+
+	<script>
+		Polymer({
+			is: 'platform-icon',
+			properties: {
+				platform: String,
+				iconClass: {
+					type: String,
+					computed: 'computeIconClass(platform)'
+				}
+			},
+			computeIconClass(platform) {
+				return `ui ${platformIcons.get(platform)} icon`
+			}
+		})
+	</script>	
+</dom-module>

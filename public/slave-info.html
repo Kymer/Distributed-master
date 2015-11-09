@@ -1,9 +1,89 @@
 <dom-module id="slave-info">
 	<template>
-		<h1>info</h1>
+		<div class="ui hidden divider"></div>
+
+		<div class="ui container">
+
+			<h1 class="ui centered header">
+				<i is="platform-icon" platform="{{platform}}"></i>
+				{{hostname}}
+			</h1>
+
+			<h2 class="ui header">Disk usage</h2>
+			<div class="ui green progress">
+				<div class="bar" style="transition: 300ms; -webkit-transition: 300ms; width: 100%;">
+					<div class="progress">{{ usedPercentage(drives[0]) }}% used</div>
+				</div>
+			</div>
+
+			<h2 class="ui header">System info</h2>
+			<table class="ui table">
+				<thead>
+				<tr>
+					<th>Architecture</th>
+					<th>Cores</th>
+					<th>Platform</th>
+				</tr>
+				</thead>
+				<tbody>
+				<td>{{os.arch}}</td>
+				<td>{{os.cpuCount}}</td>
+				<td>Darwin</td>
+				</tbody>
+			</table>
+
+			<h2 class="ui header">Tasks</h2>
+			<div class="ui labeled icon ls button"><i class="ui folder icon"></i>List directory</div>
+			<div class="ui labeled icon showAlert button"><i class="ui announcement icon"></i>Show alert</div>
+			<div class="ui labeled icon ps button"><i class="ui list layout icon"></i>Show active processes</div>
+
+			{{#if alertButtonWasPushed}}
+				<div class="ui icon message">
+					<i class="{{messageIcon}}"></i>
+					<i class="close icon"></i>
+					<div class="content">
+						<div class="header">{{messageTitle}}</div>
+						<p>{{messageContent}}</p>
+					</div>
+				</div>
+			{{/if}}
+
+		</div>
 	</template>
 
 	<script>
-		Polymer({is: 'slave-info'})
+		Polymer({
+			is: 'slave-info',
+			properties: {
+				_id: String,
+				address: String,
+				connected: Boolean,
+				architecture: String,
+				cpuCount: Number,
+				drives: Array,
+				hostname: String,
+				platform: String
+			},
+			usedPercentage(disk) {
+				if (disk) {
+					var {total, available, used} = disk
+					return parseFloat(total) == 0 ? 0 : Math.round(parseFloat(used) / parseFloat(total) * 10000)/100
+				}
+			},
+			attached() {
+				var self = this
+				self._slavesTracker = Tracker.autorun(function() {
+					var slave = Slaves.findOne(FlowRouter.getParam('id'))
+					self.id = slave._id;
+					self.address = slave.address;
+					_.forEach(slave.os, function(value, key) {
+						self[key] = value
+					})
+				})
+			},
+			detached() {
+				this._slavesTracker.stop()
+			}
+		})
 	</script>
 </dom-module>

@@ -12,7 +12,7 @@
 				</thead>
 				<tbody>
 					<template is="dom-repeat" items="{{slaves}}">
-						<tr is="slave-row" slave="{{item}}"></slave-row>
+						<tr is="slave-row" slave="{{item}}"></tr>
 					</template>
 				</tbody>
 			</table>
@@ -28,13 +28,13 @@
 					value: [{os: {hostname: '1'}}, {os: {hostname: '2'}}]
 				}
 			},
-			attached() {
+			ready() {
 				var self = this
 				self._slavesTracker = Tracker.autorun(function() {
 					self.slaves = Slaves.find({connected: true}).fetch()
 				})
 			},
-			detached() { self._slavesTracker.stop() }
+			detached() { this._slavesTracker.stop() }
 		})
 	</script>
 </dom-module>
@@ -42,14 +42,15 @@
 <dom-module is="slave-row">
 	<template>
 		<td><platform-icon platform="{{slave.os.platform}}" /></td>
-		<td><a href="slaveInfo/{{_id}}">{{slave.os.hostname}}</a></td>
+		<td><a href="{{urlFor(slave._id)}}">{{slave.os.hostname}}</a></td>
 		<td class="right aligned"><semantic-icon name="right angle" /></td>
 	</template>
 
 	<script>
 		Polymer({
 			is: 'slave-row',
-			extends: 'tr'
+			extends: 'tr',
+			urlFor(id) {return `slaveInfo/${id}`}
 		})
 	</script>
 </dom-module>

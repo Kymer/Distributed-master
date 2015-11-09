@@ -1,38 +1,16 @@
-<dom-module is="semantic-icon">
-	<template> <i class$="{{iconClass}}"/> </template>
-
-	<script>
-		Polymer({
-			is: 'semantic-icon',
-			properties: {
-				name: String,
-				iconClass: {
-					type: String,
-					computed: 'computeIconClass(name)'
-				}
-			},
-			computeIconClass(platform) {
-				return `ui ${platform} icon`
-			}
-		})
-	</script>	
-</dom-module>
-
 <dom-module is="platform-icon">
-	<template> <i class$="{{iconClass}}"/> </template>
-
 	<script>
 		Polymer({
 			is: 'platform-icon',
+			extends: 'i',
 			properties: {
-				platform: String,
-				iconClass: {
+				platform: {
 					type: String,
-					computed: 'computeIconClass(platform)'
+					observer: 'changePlatform'
 				}
 			},
-			computeIconClass(platform) {
-				return `ui ${platformIcons.get(platform)} icon`
+			changePlatform() {
+				this.root.className = `ui ${platformIcons.get(this.platform)} icon`
 			}
 		})
 	</script>	

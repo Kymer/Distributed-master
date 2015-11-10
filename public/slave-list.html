@@ -41,7 +41,7 @@
 
 <dom-module is="slave-row">
 	<template>
-		<td><platform-icon platform="{{slave.os.platform}}" /></td>
+		<td><i is="platform-icon" platform="{{slave.os.platform}}" /></td>
 		<td><a href="{{urlFor(slave._id)}}">{{slave.os.hostname}}</a></td>
 		<td class="right aligned"><semantic-icon name="right angle" /></td>
 	</template>

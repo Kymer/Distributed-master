@@ -34,19 +34,19 @@
 
 			<h2 class="ui header">Tasks</h2>
 			<div class="ui labeled icon ls button"><i class="ui folder icon"></i>List directory</div>
-			<div class="ui labeled icon showAlert button"><i class="ui announcement icon"></i>Show alert</div>
+			<div on-click="showAlert" class="ui labeled icon showAlert button"><i class="ui announcement icon"></i>Show alert</div>
 			<div class="ui labeled icon ps button"><i class="ui list layout icon"></i>Show active processes</div>
 
-			{{#if alertButtonWasPushed}}
+			<template is="dom-if" if="{{alertButtonWasPushed}}">
 				<div class="ui icon message">
-					<i class="{{messageIcon}}"></i>
-					<i class="close icon"></i>
+					<i class$="{{messageIcon}}"></i>
+					<i on-click="closeMessage" class="close icon"></i>
 					<div class="content">
 						<div class="header">{{messageTitle}}</div>
 						<p>{{messageContent}}</p>
 					</div>
 				</div>
-			{{/if}}
+			</template>
 
 		</div>
 	</template>
@@ -62,7 +62,11 @@
 				cpuCount: Number,
 				drives: Array,
 				hostname: String,
-				platform: String
+				platform: String,
+				alertButtonWasPushed: Boolean,
+				messageTitle: String,
+				messageContent: String,
+				messageIcon: String
 			},
 			usedPercentage(disk) {
 				if (disk) {
@@ -72,6 +76,31 @@
 			},
 			usedPercentageAt(disks, index) {
 				return this.usedPercentage(disks[index])
+			},
+			showAlert(e) {
+				var self = this
+				this.alertButtonWasPushed = true
+				this.messageTitle = 'Hold tight!'
+				this.messageContent = "We're awaiting client response..."
+				this.messageIcon = 'big smile loading icon'
+
+				Meteor.call('showDialog', this.address, function(error, result) {
+					console.log("meteor method!")
+					if(result) {
+						self.messageTitle = 'Client answered'
+						self.messageContent = `The client answered "${result['text returned']}" and pushed the button: "${	result['button returned']}"`
+						self.messageIcon = 'ui big call icon'
+					} else {
+						console.log("false")
+						self.messageTitle = 'Client rejected the dialog'
+						self.messageContent = 'The client has canceled the operation'
+						self.messageIcon = 'ui big frown icon'
+					}
+					console.log(self.message)
+				})
+			},
+			closeMessage(e) {
+				this.alertButtonWasPushed = false
 			},
 			attached() {
 				var self = this
@@ -83,6 +112,7 @@
 						self[key] = value
 					})
 				})
+				this.alertButtonWasPushed = false
 			},
 			detached() {
 				this._slavesTracker.stop()
